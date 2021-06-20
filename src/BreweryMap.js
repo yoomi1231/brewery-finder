@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useAxios from 'axios-hooks';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import styled from '@emotion/styled';
 
@@ -11,10 +10,12 @@ const MapWrapper = styled.div`
     text-align: center;
     font-size: 1.5em;
     font-family: 'Ubuntu', sans-serif;
+    padding-left: 10%;
+    padding-top: 10px;
 `;  
 
 const GoogleMap = styled(Map)`
-    border-top: 10px solid white;
+    
 `;
 
 const InfoWrapper = styled.div`
@@ -23,19 +24,11 @@ const InfoWrapper = styled.div`
     font-size: 1.2em;
 `;
 
-const BreweryMap = ({ google, searchTerm }) => {
+const BreweryMap = ({ google, searchTerm, data, filteredData }) => {
     const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
     const [selectedPlace, setSelectedPlace] = useState({});
 
-    const [{ data, loading, error }] = useAxios({
-        url: `https://api.openbrewerydb.org/breweries?by_city=${searchTerm}&by_type=micro&per_page=50`
-    });
-
-    if (loading) return <div>loading...</div>
-    if (error) return <div>error</div>
-
-    const filteredData = data.filter(item => item.latitude && item.longitude )
 
     const onMarkerClick = (props, marker) => {
         setActiveMarker(marker);
@@ -71,40 +64,41 @@ const BreweryMap = ({ google, searchTerm }) => {
             );
         });
     };
-
+    
     const MapContainer = () => {
         return (
-            <GoogleMap
-                google={google}
-                style={{width: "100%", height: "100%"}}
-                zoom={12}
-                initialCenter={{ lat: filteredData[0].latitude, lng: filteredData[0].longitude }}
-                onClick={onMapClicked}
-            >
-                {renderMarker()}
-                <InfoWindow
-                    visible={showInfoWindow}
-                    onClose={onInfoWindowClose}
-                    marker={activeMarker}
-                >   
-                    <InfoWrapper>
-                        <span>{selectedPlace.name}</span>
-                        <span>(Ph. {selectedPlace.phone})</span>
-                        <a href={`${selectedPlace.url}`}>{selectedPlace.url}</a> 
-                        <span>{selectedPlace.address}</span>
-                    </InfoWrapper>
-                </InfoWindow>
-            </GoogleMap>
+            <div>
+                <GoogleMap
+                    google={google}
+                    style={{width: "80%", height: "75%"}}
+                    zoom={12}
+                    initialCenter={{ lat: filteredData[0].latitude, lng: filteredData[0].longitude }}
+                    onClick={onMapClicked}
+                >
+                    {renderMarker()}
+                    <InfoWindow
+                        visible={showInfoWindow}
+                        onClose={onInfoWindowClose}
+                        marker={activeMarker}
+                    >   
+                        <InfoWrapper>
+                            <span>{selectedPlace.name}</span>
+                            <span>(Ph. {selectedPlace.phone})</span>
+                            <a href={`${selectedPlace.url}`}>{selectedPlace.url}</a> 
+                            <span>{selectedPlace.address}</span>
+                        </InfoWrapper>
+                    </InfoWindow>
+                </GoogleMap>
+            </div>
         );
     };
 
     return (
         <Container>
             <MapWrapper>
-                {
-                    data.length !== 0 ? MapContainer() : `No brewery found in ${searchTerm}`
-                }
+                {MapContainer()}
             </MapWrapper>
+            
         </Container>
     );
 };
