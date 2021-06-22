@@ -14,10 +14,6 @@ const MapWrapper = styled.div`
     padding-top: 10px;
 `;  
 
-const GoogleMap = styled(Map)`
-    
-`;
-
 const InfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -68,7 +64,7 @@ const BreweryMap = ({ google, searchTerm, data, filteredData }) => {
     const MapContainer = () => {
         return (
             <div>
-                <GoogleMap
+                <Map
                     google={google}
                     style={{width: "80%", height: "75%"}}
                     zoom={12}
@@ -88,7 +84,7 @@ const BreweryMap = ({ google, searchTerm, data, filteredData }) => {
                             <span>{selectedPlace.address}</span>
                         </InfoWrapper>
                     </InfoWindow>
-                </GoogleMap>
+                </Map>
             </div>
         );
     };
@@ -98,7 +94,6 @@ const BreweryMap = ({ google, searchTerm, data, filteredData }) => {
             <MapWrapper>
                 {MapContainer()}
             </MapWrapper>
-            
         </Container>
     );
 };

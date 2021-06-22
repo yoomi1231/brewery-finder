@@ -5,28 +5,21 @@ import SearchBox from './SearchBox';
 import BreweryMap from './BreweryMap';
 import ListView from './ListView';
 
-import beerImage from './bee.jpeg';
-
 const Container = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: pink;
+    background-color: #d3dade;
 `; 
 
 const MapContainer = styled.div`
-    ${'' /* height: 70%; */}
     text-align: center;
     height: 100%;
 `;
 
 const SubContainer = styled.div`
-    ${'' /* height: 25%; */}
     align-items: center;
     text-align: center;
-    ${'' /* background-image: url(${beerImage});
-    background-repeat: no-repeat;
-    background-size: 100% 100%; */}
     margin-top: ${props =>
         props.active ? '20%' : '' };
 `;

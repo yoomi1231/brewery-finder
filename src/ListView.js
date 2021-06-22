@@ -2,10 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const ResultList = styled.div`
-    display: flex;
-    flex-direction: row;
     font-size: 1.3em;
-    width: 100vw;
+    text-align: center; 
 `;
 
 const ItemName = styled.a`
@@ -27,7 +25,6 @@ const Phone = styled.span`
 const ListView = ({ filteredData }) => {
     const ListContainer = () => {
         return filteredData.map((item, index) => {
-           
             return (
                 <ResultList 
                     id={`${item.name}-${item.latitude}-${item.longitude}`}
