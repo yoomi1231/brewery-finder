@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+const Container = styled.div`
+    background-color: #d3dade;
+    padding-bottom: 30px;
+`;
+
 const ResultList = styled.div`
     font-size: 1.3em;
     text-align: center; 
@@ -30,19 +35,21 @@ const ListView = ({ filteredData }) => {
                     id={`${item.name}-${item.latitude}-${item.longitude}`}
                     key={`${item.name}-${item.latitude}-${item.longitude}`}
                 >
-                    <span>{`${index + 1}.`} </span>
-                    <ItemName href={`${item.website_url}`}>{item.name}</ItemName> 
-                    <Address>{item.street}</Address>
-                    <Phone>{`ph. ${item.phone}`} </Phone> 
+                    <div>
+                        <span>{`${index + 1}.`} </span>
+                        <ItemName href={`${item.website_url}`}>{item.name}</ItemName> 
+                        <Address>{item.street}</Address>
+                        <Phone>{`ph. ${item.phone}`} </Phone> 
+                    </div>
                 </ResultList>
             );
         });
     };
 
     return (
-        <div>
+        <Container>
             {ListContainer()}
-        </div>
+        </Container>
     );
 };
 
